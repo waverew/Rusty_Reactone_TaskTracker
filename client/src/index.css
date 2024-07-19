@@ -5,3 +5,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: blanchedalmond;
 }
+
+.d-flex {
+  display: flex;
+}
+
+.justify-center {
+  justify-content: center;
+}
