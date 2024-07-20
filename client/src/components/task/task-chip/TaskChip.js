@@ -8,10 +8,13 @@ const TaskChip = (props) => {
             default: return "обычная";
         }
     }
+    
     return (
         <div className="TaskChip">
             <div className="d-flex task-title">
-                {props.data.title}
+                <div className="task-title-wrapper">
+                    {props.data.title}
+                </div>
             </div>
             <div className="d-flex task-content">
                 {props.data.content}
