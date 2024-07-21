@@ -10,7 +10,7 @@ const TaskChip = (props) => {
     }
     
     return (
-        <div className="TaskChip">
+        <div className="TaskChip" onDragStart={props.onDragStart} draggable>
             <div className="d-flex task-title">
                 <div className="task-title-wrapper">
                     {props.data.title}
