@@ -1,4 +1,6 @@
 .MainView {
+    height: 100%;
+    display: flex;
 }
 
 .task-table {

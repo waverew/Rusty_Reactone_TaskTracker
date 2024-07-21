@@ -1,40 +1,50 @@
 import TaskChip from "./task-chip/TaskChip";
 import "./TaskTable.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 const TaskTable = (props) => {
-  const [toDo, setToDo] = useState(props.data);
+
+  const [toDo, setToDo] = useState([]);
   const [inProgress, setInProgress] = useState([]);
   const [review, setReview] = useState([]);
   const [finished, setFinished] = useState([]);
-  const [origin, setOrigin] = useState("");
 
-  const handleOnDrag = (e, chip, type) => {
-    setOrigin(type);
+  useEffect(() => {
+    setToDo(props.data.filter(prop => prop.status == 0));
+    setInProgress(props.data.filter(prop => prop.status == 1));
+    setReview(props.data.filter(prop => prop.status == 2));
+    setFinished(props.data.filter(prop => prop.status == 3));
+  }, [props.data]);
+
+  const handleOnDrag = (e, chip) => {
     chip = JSON.stringify(chip);
     e.dataTransfer.setData("chip", chip);
   };
 
-  const removeChipFromOrigin = (chip) => {
-    const type = origin;
+  const handleEndDrag = (chip, type) => {
+    removeChipFromOrigin(chip, type);
+  }
+
+  const removeChipFromOrigin = (chip, type) => {
     switch (type) {
       case "progress": {
         inProgress.splice(inProgress.indexOf(chip), 1);
-        setInProgress(inProgress);
+        setInProgress([...inProgress]);
         break;
       }
       case "todo": {
         toDo.splice(toDo.indexOf(chip), 1);
-        setToDo(toDo);
+        setToDo([...toDo]);
         break;
       }
       case "review": {
-        review.splice(review.indexOf(chip), 1);
-        setReview(review);
+        const updItems = [...review];
+        updItems.splice(updItems.indexOf(chip), 1);
+        setReview([...updItems]);
         break;
       }
       case "finished": {
         finished.splice(finished.indexOf(chip), 1);
-        setFinished(finished);
+        setFinished([...finished]);
         break;
       }
       default:
@@ -46,22 +56,18 @@ const TaskTable = (props) => {
     const chip = JSON.parse(e.dataTransfer.getData("chip"));
     switch (type) {
       case "progress": {
-        removeChipFromOrigin(chip);
         setInProgress([...inProgress, chip]);
         break;
       }
       case "todo": {
-        removeChipFromOrigin(chip);
         setToDo([...toDo, chip]);
         break;
       }
       case "review": {
-        removeChipFromOrigin(chip);
         setReview([...review, chip]);
         break;
       }
       case "finished": {
-        removeChipFromOrigin(chip);
         setFinished([...finished, chip]);
         break;
       }
@@ -79,13 +85,15 @@ const TaskTable = (props) => {
         onDrop={(e) => handleOnDrop(e, "todo")}
         onDragOver={handleOnDragOver}
       >
-        <div className="justify-center d-flex">TODO</div>
+        <div className="justify-center d-flex table-title">TODO</div>
         <div className="justify-center d-flex">
           <div>
-            {toDo.map((data) => (
+            {toDo.map((data, i) => (
               <TaskChip
+                key={i}
                 data={data}
-                onDragStart={(e) => handleOnDrag(e, data, "todo")}
+                onDragStart={(e) => handleOnDrag(e, data)}
+                onDragEnd={e => handleEndDrag(data, "todo")}
               />
             ))}
           </div>
@@ -96,13 +104,15 @@ const TaskTable = (props) => {
         onDrop={(e) => handleOnDrop(e, "progress")}
         onDragOver={handleOnDragOver}
       >
-        <div className="justify-center d-flex">IN PROGRESS</div>
+        <div className="justify-center d-flex table-title">IN PROGRESS</div>
         <div className="justify-center d-flex">
           <div>
-            {inProgress.map((data) => (
+            {inProgress.map((data, i) => (
               <TaskChip
+                key={i}
                 data={data}
-                onDragStart={(e) => handleOnDrag(e, data, "progress")}
+                onDragStart={(e) => handleOnDrag(e, data)}
+                onDragEnd={e => handleEndDrag(data, "progress")}
               />
             ))}
           </div>
@@ -113,13 +123,15 @@ const TaskTable = (props) => {
         onDrop={(e) => handleOnDrop(e, "review")}
         onDragOver={handleOnDragOver}
       >
-        <div className="justify-center d-flex">REVIEW</div>
+        <div className="justify-center d-flex table-title">REVIEW</div>
         <div className="justify-center d-flex">
           <div>
-            {review.map((data) => (
+            {review.map((data, i) => (
               <TaskChip
+                key={i}
                 data={data}
-                onDragStart={(e) => handleOnDrag(e, data, "review")}
+                onDragStart={(e) => handleOnDrag(e, data)}
+                onDragEnd={e => handleEndDrag(data, "review")}
               />
             ))}
           </div>
@@ -130,13 +142,15 @@ const TaskTable = (props) => {
         onDrop={(e) => handleOnDrop(e, "finished")}
         onDragOver={handleOnDragOver}
       >
-        <div className="justify-center d-flex">FINISHED</div>
+        <div className="justify-center d-flex table-title">FINISHED</div>
         <div className="justify-center d-flex">
           <div>
-            {finished.map((data) => (
+            {finished.map((data, i) => (
               <TaskChip
+                key={i}
                 data={data}
-                onDragStart={(e) => handleOnDrag(e, data, "finished")}
+                onDragStart={(e) => handleOnDrag(e, data)}
+                onDragEnd={e => handleEndDrag(data, "finished")}
               />
             ))}
           </div>
