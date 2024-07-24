@@ -42,7 +42,9 @@ const MainView = (props) => {
     const index = getIndex(chip);
     if (index != -1) {
       data[index].status = status;
-      setData([...data]);
+      const newChip = data[index];
+      data.splice(index, 1);
+      setData([...data, newChip]);
     }
   }
 
