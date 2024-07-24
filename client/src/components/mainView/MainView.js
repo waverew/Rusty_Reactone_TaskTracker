@@ -37,10 +37,28 @@ const MainView = (props) => {
   const addTask = (task) => {
     setData([...data, task]);
   };
+
+  const statusChanged = (chip, status) => {
+    const index = getIndex(chip);
+    if (index != -1) {
+      data[index].status = status;
+      setData([...data]);
+    }
+  }
+
+  const getIndex = (chip) => {
+    for (let i = 0; i < data.length; i++) {
+      if (Object.keys(chip).every(k => chip[k] === data[i][k])) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
   return (
     <div className="MainView">
       <LeftMenu onAddTask={toggleDialog}></LeftMenu>
-      <TaskTable data={data} />
+      <TaskTable data={data} statusChanged={statusChanged}/>
       <AddTaskModal setDialogRef={setTaskModalRef}
       addTask={addTask}
       toggleDialog={toggleDialog}/>

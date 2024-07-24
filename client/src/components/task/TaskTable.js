@@ -52,8 +52,9 @@ const TaskTable = (props) => {
     }
   };
 
-  const handleOnDrop = (e, type) => {
+  const handleOnDrop = (e, type, status) => {
     const chip = JSON.parse(e.dataTransfer.getData("chip"));
+    props.statusChanged(chip, status);
     switch (type) {
       case "progress": {
         setInProgress([...inProgress, chip]);
@@ -82,7 +83,7 @@ const TaskTable = (props) => {
     <div className="TaskTable">
       <div
         className="task-table-inner"
-        onDrop={(e) => handleOnDrop(e, "todo")}
+        onDrop={(e) => handleOnDrop(e, "todo", 0)}
         onDragOver={handleOnDragOver}
       >
         <div className="justify-center d-flex table-title">TODO</div>
@@ -101,7 +102,7 @@ const TaskTable = (props) => {
       </div>
       <div
         className="task-table-inner"
-        onDrop={(e) => handleOnDrop(e, "progress")}
+        onDrop={(e) => handleOnDrop(e, "progress", 1)}
         onDragOver={handleOnDragOver}
       >
         <div className="justify-center d-flex table-title">IN PROGRESS</div>
@@ -120,7 +121,7 @@ const TaskTable = (props) => {
       </div>
       <div
         className="task-table-inner"
-        onDrop={(e) => handleOnDrop(e, "review")}
+        onDrop={(e) => handleOnDrop(e, "review", 2)}
         onDragOver={handleOnDragOver}
       >
         <div className="justify-center d-flex table-title">REVIEW</div>
@@ -139,7 +140,7 @@ const TaskTable = (props) => {
       </div>
       <div
         className="task-table-inner"
-        onDrop={(e) => handleOnDrop(e, "finished")}
+        onDrop={(e) => handleOnDrop(e, "finished", 3)}
         onDragOver={handleOnDragOver}
       >
         <div className="justify-center d-flex table-title">FINISHED</div>
