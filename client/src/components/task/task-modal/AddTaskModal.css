@@ -1,0 +1,31 @@
+.AddTaskModal {
+    
+    width: 20rem;
+}
+
+.task-modal-input-container {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.close-modal:hover {
+    cursor: pointer;
+}
+.close-modal {
+    width: min-content;
+}
+
+.close-modal-wrap {
+    justify-content: right;
+}
+
+.inp-wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 2rem;
+}
+
+.dynamic-wrap {
+    justify-content: space-between;
+    align-items: center;
+}
