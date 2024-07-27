@@ -11,6 +11,7 @@ const TaskChip = (props) => {
     
     return (
         <div className="TaskChip" onDragStart={props.onDragStart} onDragEnd={props.onDragEnd} draggable>
+	    <div className="delete-chip" onClick={() => props.deleteChip(props.data)}>x</div>
             <div className="d-flex task-title">
                 <div className="task-title-wrapper">
                     {props.data.title}

@@ -10,6 +10,15 @@
     border-left: 1px solid;
 }
 
+.task-table-inner-drag {
+	border: 1px dashed blue;
+
+}
 .table-title {
     border-bottom: 1px solid;
+}
+.table-dyn-drag {
+	min-height: 95%;	
+	margin: 12px;
+
 }

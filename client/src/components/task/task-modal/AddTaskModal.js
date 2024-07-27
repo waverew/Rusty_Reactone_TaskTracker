@@ -9,8 +9,13 @@ const AddTaskModal = (props) => {
 
   useEffect(() => {
     props.setDialogRef(dialogRef);
-    document.getElementsByName("низкая")[0].checked = true;
-}, []);
+	  setContentInpVal("");
+	  setTitleInpVal("");
+    	document.getElementsByName("низкая")[0].checked = true;
+	document.getElementsByName("средняя")[0].checked = false;
+	document.getElementsByName("высокая")[0].checked = false;
+
+}, [props]);
 
   const handleChange = (e, type) => {
     switch (type) {

@@ -38,6 +38,16 @@ const MainView = (props) => {
     setData([...data, task]);
   };
 
+	const deleteTask = (deletedChip) => {
+		const index = getIndex(deletedChip);
+    		if (index != -1) {
+      		data.splice(index, 1);
+		setData([...data]);
+		}
+	}
+
+
+
   const statusChanged = (chip, status) => {
     const index = getIndex(chip);
     if (index != -1) {
@@ -60,7 +70,9 @@ const MainView = (props) => {
   return (
     <div className="MainView">
       <LeftMenu onAddTask={toggleDialog}></LeftMenu>
-      <TaskTable data={data} statusChanged={statusChanged}/>
+      <TaskTable 
+	deleteChip={deleteTask}
+	  data={data} statusChanged={statusChanged}/>
       <AddTaskModal setDialogRef={setTaskModalRef}
       addTask={addTask}
       toggleDialog={toggleDialog}/>
