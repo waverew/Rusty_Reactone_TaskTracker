@@ -73,6 +73,7 @@ const TaskTable = (props) => {
   };
 
   const handleOnDrop = (e, type, status) => {
+    removeDragTableClass();
     const chip = JSON.parse(e.dataTransfer.getData("chip"));
     props.statusChanged(chip, status);
     switch (type) {
