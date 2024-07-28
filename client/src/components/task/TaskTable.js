@@ -101,10 +101,10 @@ const TaskTable = (props) => {
   };
   return (
     <div className="TaskTable">
-      <div
+	<div
         className="task-table-inner">
         <div className="justify-center d-flex table-title">TODO</div>
-        <div className="justify-center d-flex table-dyn-drag" onDrop={(e) => handleOnDrop(e, "todo", 0)}
+	<div className="justify-center d-flex table-dyn-drag" onDrop={(e) => handleOnDrop(e, "todo", 0)}
         onDragOver={handleOnDragOver}>
 
           <div>

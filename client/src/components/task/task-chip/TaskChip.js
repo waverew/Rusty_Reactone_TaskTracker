@@ -1,13 +1,33 @@
-import './TaskChip.css';
-const TaskChip = (props) => {
+import './TaskChip.css'; 
+const TaskChip = (props) => {	
+
     const getImportance = () => {
+	const importanceStyle = document.getElementsByClassName("task-importance");
         switch (props.data.importance) {
-            case 0: return "низкая";
-            case 1: return "средняя";
-            case 2: return "высокая";
+            case 0: {
+		return "низкая";
+	    }
+            case 1: {
+		return "средняя";
+	    }
+            case 2: {
+		return "высокая";
+	    }
             default: return "обычная";
         }
     }
+
+	const styleColor = () => {
+		if (props.data.importance === 0) {
+			return "green";
+		}
+		if (props.data.importance === 1) {
+			return "orange";
+		}
+		if (props.data.importance === 2) {
+			return "red";
+		}
+	    }
     
     return (
         <div className="TaskChip" onDragStart={props.onDragStart} onDragEnd={props.onDragEnd} draggable>
@@ -20,7 +40,7 @@ const TaskChip = (props) => {
             <div className="d-flex task-content">
                 {props.data.content}
             </div>
-            <div className="d-flex task-importance">
+            <div className="d-flex task-importance" style={{color: styleColor()}}>
                 {getImportance()}
             </div>
         </div>
