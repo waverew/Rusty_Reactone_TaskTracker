@@ -12,7 +12,7 @@ const MainView = (props) => {
     TaskService.getTasks()
     .then(res => setData(res))
     .catch(err => console.log(err));
-  }, [props]);
+  }, []);
   
 
   const setTaskModalRef = (dialogRef) => {
