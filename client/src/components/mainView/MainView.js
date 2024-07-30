@@ -2,24 +2,18 @@ import TaskTable from "../task/TaskTable";
 import LeftMenu from "../common/LeftMenu";
 import AddTaskModal from "../task/task-modal/AddTaskModal";
 import "./MainView.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { TaskService } from "../../services";
 
 const MainView = (props) => {
   const [modalRef, setModalRef] = useState(null);
-  const [data, setData] = useState([
-    {
-      title: "Hellow",
-      content: "Lorem ipsum lorem upsum",
-      importance: 1,
-      status: 0,
-    },
-    {
-      title: "Hellow nogga",
-      content: "Lorem ipsum lorem upsum",
-      importance: 1,
-      status: 2,
-    },
-  ]);
+  const [data, setData] = useState([]);
+  useEffect( () => {
+    TaskService.getTasks()
+    .then(res => setData(res))
+    .catch(err => console.log(err));
+  }, [props]);
+  
 
   const setTaskModalRef = (dialogRef) => {
     setModalRef(dialogRef);
