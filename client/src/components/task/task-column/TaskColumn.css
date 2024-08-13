@@ -1,0 +1,38 @@
+.TaskColumn {
+    border-left: 1px solid black;
+}
+
+.table-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.task-table-inner-drag {
+	border: 2px dashed blue;
+
+}
+.table-title {
+    border-bottom: 1px solid;
+    height: 30px;
+}
+.table-dyn-drag {
+	margin: 12px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+.scroll-container {
+    height: calc(100vh - 60px);
+    overflow-y: auto;
+}
+
+.scroll-container::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .scroll-container {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }

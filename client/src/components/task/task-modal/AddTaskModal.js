@@ -9,13 +9,12 @@ const AddTaskModal = (props) => {
 
   useEffect(() => {
     props.setDialogRef(dialogRef);
-	  setContentInpVal("");
-	  setTitleInpVal("");
-    	document.getElementsByName("низкая")[0].checked = true;
-	document.getElementsByName("средняя")[0].checked = false;
-	document.getElementsByName("высокая")[0].checked = false;
-
-}, [props]);
+    setContentInpVal("");
+    setTitleInpVal("");
+    document.getElementsByName("низкая")[0].checked = true;
+    document.getElementsByName("средняя")[0].checked = false;
+    document.getElementsByName("высокая")[0].checked = false;
+  }, [props]);
 
   const handleChange = (e, type) => {
     switch (type) {
@@ -36,15 +35,15 @@ const AddTaskModal = (props) => {
     let importance = 0;
     let cbs = document.getElementsByClassName("cb");
     for (var i = 0; i < cbs.length; i++) {
-        if (cbs[i].checked === true) {
-            if(cbs[i].name === "низкая") {
-                importance = 0;
-            } else if (cbs[i].name === "средняя") {
-                importance = 1;
-            } else if (cbs[i].name === "высокая") {
-                importance = 2;
-            }
+      if (cbs[i].checked === true) {
+        if (cbs[i].name === "низкая") {
+          importance = 0;
+        } else if (cbs[i].name === "средняя") {
+          importance = 1;
+        } else if (cbs[i].name === "высокая") {
+          importance = 2;
         }
+      }
     }
     const data = {
       title: titleInpVal,
