@@ -1,5 +1,4 @@
 .AddTaskModal {
-    
     width: 20rem;
 }
 
@@ -19,13 +18,24 @@
 }
 
 .inp-wrap {
-    display: flex;
-    justify-content: space-between;
+    display: flex;    
+}
+
+.align-center{
     align-items: center;
-    height: 2rem;
 }
 
 .dynamic-wrap {
     justify-content: space-between;
     align-items: center;
+}
+.field-tag {
+    min-width: 90px;
+}
+
+.name-input {
+    width: 100%;
+}
+textarea {
+    width: 100%;
 }

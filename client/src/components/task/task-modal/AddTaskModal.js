@@ -72,28 +72,29 @@ const AddTaskModal = (props) => {
         </div>
       </div>
       <div className="task-modal-input-container">
-        <div className="inp-wrap">
-          <label>Название:</label>
+        <div className="inp-wrap align-center">
+          <div className="field-tag">Название:</div>
           <input
+          className="name-input"
             type="text"
             value={titleInpVal}
             onChange={(e) => handleChange(e, "title")}
           />
         </div>
         <div className="task-modal-input-container">
-          <div className="inp-wrap">
-            <label>Содержание:</label>
-            <input
-              type="text"
+          <div className="inp-wrap ">
+            <div className="field-tag">Содержание:</div>
+            <textarea rows={4}
+              cols={30}
               value={contentInpVal}
               onChange={(e) => handleChange(e, "content")}
             />
           </div>
         </div>
         <div className="task-modal-input-container d-flex dynamic-wrap">
-          <label>Важность:</label>
+          <div className="field-tag">Важность:</div>
           {importanceTypes.map((importance, i) => (
-            <div key={i} className="inp-wrap radio-wrap">
+            <div key={i} className="inp-wrap align-center radio-wrap">
               <label>{importance}</label>
               <div>
                 <input
