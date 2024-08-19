@@ -32,6 +32,7 @@ const TaskChip = (props) => {
     return (
         <div className="TaskChip" onDragStart={props.onDragStart} onDragEnd={props.onDragEnd} draggable>
             <div className="delete-chip" onClick={() => props.deleteChip(props.data)}>x</div>
+            <div className="task-importance" title={getImportance()} style={{ color: styleColor() }}>•</div>
             <div className="d-flex task-title">
                 <div className="task-title-wrapper">
                     <div className="task-title-text">
@@ -42,9 +43,9 @@ const TaskChip = (props) => {
             <div className="d-flex task-content">
                 {props.data.content}
             </div>
-            <div className="d-flex task-importance" style={{ color: styleColor() }}>
-                {getImportance()}
-            </div>
+            {/* <div className="d-flex task-importance" style={{ color: styleColor() }}>
+                {}
+            </div> */}
         </div>
     )
 }
