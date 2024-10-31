@@ -23,22 +23,26 @@ const TaskTable = (props) => {
       typeNumber={0}
       typeName={"TODO"}
       statusChanged={props.statusChanged}
-      deleteChip={props.deleteChip}></TaskColumn>
+      deleteChip={props.deleteChip}
+      editTask={props.editTask}></TaskColumn>
       <TaskColumn tasks={inProgress}
       typeNumber={1}
       typeName={"Progress"}
       deleteChip={props.deleteChip}
-      statusChanged={props.statusChanged}></TaskColumn>
+      statusChanged={props.statusChanged}
+      editTask={props.editTask}></TaskColumn>
       <TaskColumn tasks={review}
       typeNumber={2}
       typeName={"Review"}
       deleteChip={props.deleteChip}
-      statusChanged={props.statusChanged}></TaskColumn>
+      statusChanged={props.statusChanged}
+      editTask={props.editTask}></TaskColumn>
       <TaskColumn tasks={finished}
       typeNumber={3}
       typeName={"Finished"}
       deleteChip={props.deleteChip}
-      statusChanged={props.statusChanged}></TaskColumn>
+      statusChanged={props.statusChanged}
+      editTask={props.editTask}></TaskColumn>
     </div>
   );
 };

@@ -6,41 +6,22 @@ const TaskColumn = (props) => {
 
   useEffect(() => {
     setChips(props.tasks);
+    
   }, [props.tasks]);
 
   const handleOnDrop = (e, status) => {
-    removeDragTableClass();
     const chip = JSON.parse(e.dataTransfer.getData("chip"));
     props.statusChanged(chip, status);
     setChips([...chips, chip]);
   };
 
-  const handleEndDrag = (chip) => {
-    removeDragTableClass();
-  };
-
   const handleOnDrag = (e, chip) => {
-    addDragTableClass();
     chip = JSON.stringify(chip);
     e.dataTransfer.setData("chip", chip);
   };
 
-  const addDragTableClass = () => {
-    const tables = document.getElementsByClassName("table-dyn-drag");
-    for (let i = 0; i < tables.length; i++) {
-      tables[i].classList.add("task-table-inner-drag");
-    }
-  };
-
   const deleteChip = (chip) => {
     props.deleteChip(chip);
-  };
-
-  const removeDragTableClass = () => {
-    const tables = document.getElementsByClassName("table-dyn-drag");
-    for (let i = 0; i < tables.length; i++) {
-      tables[i].classList.remove("task-table-inner-drag");
-    }
   };
 
   const handleOnDragOver = (e) => {
@@ -62,7 +43,7 @@ const TaskColumn = (props) => {
               data={data}
               deleteChip={deleteChip}
               onDragStart={(e) => handleOnDrag(e, data)}
-              onDragEnd={(e) => handleEndDrag(data)}
+              editTask={props.editTask}
             />
           ))}
         </div>

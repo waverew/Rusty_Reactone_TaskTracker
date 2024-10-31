@@ -2,7 +2,6 @@ import './TaskChip.css';
 const TaskChip = (props) => {
 
     const getImportance = () => {
-        const importanceStyle = document.getElementsByClassName("task-importance");
         switch (props.data.importance) {
             case 0: {
                 return "низкая";
@@ -34,7 +33,7 @@ const TaskChip = (props) => {
             <div className="delete-chip" onClick={() => props.deleteChip(props.data)}>x</div>
             <div className="task-importance" title={getImportance()} style={{ color: styleColor() }}>•</div>
             <div className="d-flex task-title">
-                <div className="task-title-wrapper">
+                <div className="task-title-wrapper" onClick={() => props.editTask(props.data)}>
                     <div className="task-title-text">
                         {props.data.title}
                     </div>

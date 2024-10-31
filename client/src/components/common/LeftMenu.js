@@ -4,12 +4,7 @@ const LeftMenu = (props) => {
   console.log(uuidv4());
 
   const addTask = () => {
-    props.onAddTask({
-      title: "Hellow nogga",
-      content: "Lorem ipsum lorem upsum",
-      importance: 1,
-      status: 2,
-    });
+    props.handleDialogState(0);
   };
   return (
     <div className="LeftMenu">

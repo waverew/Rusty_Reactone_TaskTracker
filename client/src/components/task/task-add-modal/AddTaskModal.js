@@ -1,20 +1,25 @@
 import "./AddTaskModal.css";
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, forwardRef, useImperativeHandle } from "react";
 
-const AddTaskModal = (props) => {
+const AddTaskModal = forwardRef((props, ref) => {
   const dialogRef = useRef(null);
   const [titleInpVal, setTitleInpVal] = useState("");
   const [contentInpVal, setContentInpVal] = useState("");
   const importanceTypes = ["низкая", "средняя", "высокая"];
 
   useEffect(() => {
-    props.setDialogRef(dialogRef);
     setContentInpVal("");
     setTitleInpVal("");
     document.getElementsByName("низкая")[0].checked = true;
     document.getElementsByName("средняя")[0].checked = false;
     document.getElementsByName("высокая")[0].checked = false;
   }, [props]);
+
+  useImperativeHandle(ref, () => ({
+    toggle() {
+      toggleDialog();
+    }
+  }));
 
   const handleChange = (e, type) => {
     switch (type) {
@@ -52,7 +57,7 @@ const AddTaskModal = (props) => {
       status: 0,
     };
     props.addTask(data);
-    props.toggleDialog();
+    toggleDialog();
   };
 
   const handleChangeCheckbox = (event) => {
@@ -64,10 +69,16 @@ const AddTaskModal = (props) => {
     cb.checked = true;
   };
 
+  const toggleDialog = () => {
+    dialogRef.current.hasAttribute("open")
+      ? dialogRef.current.close()
+      : dialogRef.current.showModal();
+  };
+
   return (
     <dialog ref={dialogRef} className="AddTaskModal">
       <div className="close-modal-wrap d-flex">
-        <div className="close-modal" onClick={props.toggleDialog}>
+        <div className="close-modal" onClick={() => toggleDialog()}>
           x
         </div>
       </div>
@@ -95,7 +106,6 @@ const AddTaskModal = (props) => {
           <div className="field-tag">Важность:</div>
           {importanceTypes.map((importance, i) => (
             <div key={i} className="inp-wrap align-center radio-wrap">
-              <label>{importance}</label>
               <div>
                 <input
                   type="radio"
@@ -104,6 +114,7 @@ const AddTaskModal = (props) => {
                   onChange={handleChangeCheckbox}
                 />
               </div>
+              <label>{importance}</label>
             </div>
           ))}
         </div>
@@ -112,6 +123,6 @@ const AddTaskModal = (props) => {
       <button onClick={saveTask}>Сохранить</button>
     </dialog>
   );
-};
+});
 
 export default AddTaskModal;
