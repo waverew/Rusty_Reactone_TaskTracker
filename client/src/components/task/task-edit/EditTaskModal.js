@@ -1,19 +1,28 @@
 import "./EditTaskModal.css";
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, forwardRef, useImperativeHandle } from "react";
 
-const EditTaskModal = (props) => {
+const EditTaskModal = forwardRef((props, ref) => {
   const dialogRef = useRef(null);
   const [titleInpVal, setTitleInpVal] = useState("");
   const [contentInpVal, setContentInpVal] = useState("");
+  const [status, setStatus] = useState(null);
   const importanceTypes = ["низкая", "средняя", "высокая"];
+  const checkBoxes = useRef([null, null, null]);
 
-  useEffect(() => {
-    setContentInpVal("");
-    setTitleInpVal("");
-    document.getElementsByName("низкая")[0].checked = true;
-    document.getElementsByName("средняя")[0].checked = false;
-    document.getElementsByName("высокая")[0].checked = false;
-  }, [props]);
+  useImperativeHandle(ref, () => ({
+    toggle() {
+      toggleDialog();
+    },
+    setDataForEdit(editedChip) {
+      checkBoxes.current.forEach(checkBox => checkBox.checked = false);
+      setTimeout(() => {
+        setContentInpVal(editedChip.content);
+        setTitleInpVal(editedChip.title);
+        setImportanceCheckboxes(editedChip.importance);
+        setStatus(editedChip.status);
+      });
+    }
+  }));
 
   const handleChange = (e, type) => {
     switch (type) {
@@ -31,51 +40,73 @@ const EditTaskModal = (props) => {
   };
 
   const saveTask = () => {
-    let importance = 0;
-    let cbs = document.getElementsByClassName("cb");
-    for (var i = 0; i < cbs.length; i++) {
-      if (cbs[i].checked === true) {
-        if (cbs[i].name === "низкая") {
-          importance = 0;
-        } else if (cbs[i].name === "средняя") {
-          importance = 1;
-        } else if (cbs[i].name === "высокая") {
-          importance = 2;
-        }
-      }
-    }
+    let importance = getImportanceVal();
+    
     const data = {
       title: titleInpVal,
       content: contentInpVal,
       importance: importance,
-      status: 0,
+      status: status,
     };
-    props.addTask(data);
-    props.toggleDialog(dialogRef);
+    props.editTask(data);
+    toggleDialog();
   };
 
   const handleChangeCheckbox = (event) => {
     const cb = event.target;
-    var cbs = document.getElementsByClassName("cb");
-    for (var i = 0; i < cbs.length; i++) {
-      cbs[i].checked = false;
+    for (var i = 0; i < checkBoxes.current.length; i++) {
+      checkBoxes.current[i].checked = false;
     }
     cb.checked = true;
   };
 
   const toggleDialog = () => {
-    if (!props.show) {
-      return;
-    }
     dialogRef.current.hasAttribute("open")
       ? dialogRef.current.close()
       : dialogRef.current.showModal();
   };
 
+  const getImportanceVal = () => {
+    for (var i = 0; i < checkBoxes.current.length; i++) {
+      if (checkBoxes.current[i].checked === true) {
+        if (checkBoxes.current[i].name === "низкая") {
+          return 0;
+        } else if (checkBoxes.current[i].name === "средняя") {
+          return 1;
+        } else if (checkBoxes.current[i].name === "высокая") {
+          return 2;
+        }
+      }
+    }
+    return 0;
+  }
+
+  const setImportanceCheckboxes = (importance) => {
+    debugger
+    switch (importance) {
+      case 0: {
+        checkBoxes.current[0].checked = true;
+        break;
+      }
+      case 1: {
+        checkBoxes.current[1].checked = true;
+        break;
+      }
+      case 2: {
+        checkBoxes.current[2].checked = true;
+        break;
+      }
+      default: {
+        checkBoxes.current[0].checked = true;
+        break;
+      }
+    }
+  }
+
   return (
     <dialog ref={dialogRef} className="AddTaskModal">
       <div className="close-modal-wrap d-flex">
-        <div className="close-modal" onClick={() => toggleDialog}>
+        <div className="close-modal" onClick={() => toggleDialog()}>
           x
         </div>
       </div>
@@ -105,6 +136,7 @@ const EditTaskModal = (props) => {
             <div key={i} className="inp-wrap align-center radio-wrap">
               <div>
                 <input
+                  ref={el => checkBoxes.current[i] = el}
                   type="radio"
                   name={importance}
                   className="cb"
@@ -120,6 +152,6 @@ const EditTaskModal = (props) => {
       <button onClick={saveTask}>Сохранить</button>
     </dialog>
   );
-};
+});
 
 export default EditTaskModal;

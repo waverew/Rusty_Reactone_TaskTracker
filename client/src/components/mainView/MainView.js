@@ -8,8 +8,10 @@ import { TaskService } from "../../services";
 
 const MainView = (props) => {
   const addTaskModalRef = useRef(null);
+  const editTaskModalRef = useRef(null);
   const [data, setData] = useState([]);
   const [showAddModal, setShowAddModal] = useState(false);
+  const [chipToEdit, setChipToEdit] = useState(null); 
   useEffect(() => {
     setShowAddModal(false);
     TaskService.getTasks()
@@ -33,8 +35,10 @@ const MainView = (props) => {
   };
 
   const editTask = (editedTask) => {
-    const index = getIndex(editedTask);
-    console.log("sasdas")
+    setChipToEdit(editedTask);
+    editTaskModalRef.current.toggle();
+    editTaskModalRef.current.setDataForEdit(editedTask);
+    console.log(editedTask);
   }
 
   const handleDialogState = (type) => {
@@ -54,6 +58,14 @@ const MainView = (props) => {
       setData([...data, newChip]);
     }
   };
+
+  const saveEditedTask = (chip) => {
+    const index = getIndex(chipToEdit);
+    if (index != -1) {
+      data[index] = chip;
+      setData([...data]);
+    }
+  } 
 
   const getIndex = (chip) => {
     for (let i = 0; i < data.length; i++) {
@@ -79,6 +91,9 @@ const MainView = (props) => {
         addTask={addTask}
       />
       <EditTaskModal
+        ref={editTaskModalRef}
+        editTask={saveEditedTask}
+        chip={chipToEdit}
       />
     </div>
   );
