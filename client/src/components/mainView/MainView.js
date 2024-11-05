@@ -18,9 +18,6 @@ const MainView = (props) => {
       .then((res) => setData(res))
       .catch((err) => console.log(err));
   }, []);
-  useEffect(() => {
-    console.log(showAddModal);
-  }, showAddModal)
 
   const addTask = (task) => {
     setData([...data, task]);
@@ -28,7 +25,7 @@ const MainView = (props) => {
 
   const deleteTask = (deletedChip) => {
     const index = getIndex(deletedChip);
-    if (index != -1) {
+    if (index !== -1) {
       data.splice(index, 1);
       setData([...data]);
     }
@@ -46,12 +43,15 @@ const MainView = (props) => {
       case 0:
         addTaskModalRef.current.toggle();
         break;
+      default: {
+        break;
+      }
     }
   }
 
   const statusChanged = (chip, status) => {
     const index = getIndex(chip);
-    if (index != -1) {
+    if (index !== -1) {
       data[index].status = status;
       const newChip = data[index];
       data.splice(index, 1);
@@ -61,7 +61,7 @@ const MainView = (props) => {
 
   const saveEditedTask = (chip) => {
     const index = getIndex(chipToEdit);
-    if (index != -1) {
+    if (index !== -1) {
       data[index] = chip;
       setData([...data]);
     }

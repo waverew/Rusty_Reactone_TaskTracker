@@ -1,5 +1,5 @@
 import "./EditTaskModal.css";
-import { useRef, useEffect, useState, forwardRef, useImperativeHandle } from "react";
+import { useRef, useState, forwardRef, useImperativeHandle } from "react";
 
 const EditTaskModal = forwardRef((props, ref) => {
   const dialogRef = useRef(null);
