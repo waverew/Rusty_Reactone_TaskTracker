@@ -20,3 +20,17 @@ div {
 .justify-center {
   justify-content: center;
 }
+
+.button-standard {
+  height: 32px;
+  width: auto;
+  background: none;
+  border: 0.5px solid;
+  border-radius: 5px;
+  text-align: center;
+  cursor: pointer;
+}
+.button-standard:hover {
+  border-color: green;
+  color: green;
+}

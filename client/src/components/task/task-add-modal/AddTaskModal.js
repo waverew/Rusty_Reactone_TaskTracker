@@ -123,7 +123,7 @@ const AddTaskModal = forwardRef((props, ref) => {
         </div>
       </div>
 
-      <button onClick={saveTask}>Сохранить</button>
+      <button onClick={saveTask} className="button-standard">Сохранить</button>
     </dialog>
   );
 });

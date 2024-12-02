@@ -8,7 +8,7 @@ const LeftMenu = (props) => {
   };
   return (
     <div className="LeftMenu">
-      <button onClick={addTask}>добавить таску</button>
+      <button onClick={addTask} className="button-standard">добавить таску</button>
     </div>
   );
 };

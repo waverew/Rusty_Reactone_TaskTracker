@@ -8,6 +8,7 @@
 }
 .close-modal:hover {
     cursor: pointer;
+    color: rgba(255, 0, 0, 0.8);
 }
 .close-modal {
     width: min-content;
