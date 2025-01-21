@@ -2,6 +2,7 @@
 #![allow(unused_imports)]
 mod routes;
 mod objects;
+mod database;
 
 use routes::create_route;
 

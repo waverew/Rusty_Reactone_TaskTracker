@@ -1,4 +1,4 @@
-mod tasks;
+mod handlers;
 use axum::{
     headers::Authorization,
     http::Method,
@@ -6,7 +6,7 @@ use axum::{
     Extension, Router, TypedHeader,
 };
 use tower_http::cors::{Any, CorsLayer};
-use tasks::get_tasks::TaskHandler;
+use handlers::tasks::{get as t_get, put as t_put, post as t_post};
 
 
 #[derive(Clone)]
@@ -22,7 +22,7 @@ pub fn create_route() -> Router {
         message: "Hello from Shared Data".to_owned(),
     };
     Router::new()
-        .route("/api/tasks", get(TaskHandler::get))
+        .route("/api/tasks", get(t_get).put(t_get).post(t_post))
         .layer(cros)
         .layer(Extension(shared_data))
 }

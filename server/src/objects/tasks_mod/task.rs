@@ -5,12 +5,14 @@ pub struct Task {
     title: String,
     content: String,
     importance: u8,
-    status: u8
+    status: u8,
+    id: u8
 }
 
 impl Task {
-    pub fn new(title: String, content: String, importance: u8, status: u8) -> Task {
+    pub fn new(title: String, content: String, importance: u8, status: u8, id: u8) -> Task {
         return Task {
+            id: id,
             title: title,
             content: content,
             importance: importance,
