@@ -82,7 +82,6 @@ const EditTaskModal = forwardRef((props, ref) => {
   }
 
   const setImportanceCheckboxes = (importance) => {
-    debugger
     switch (importance) {
       case 0: {
         checkBoxes.current[0].checked = true;

@@ -1,28 +1,28 @@
 use crate::objects::tasks_mod::task::Task;
-use crate::database::model::{get_conn};
+use crate::database::model::{get_tasks, add_task};
+use tokio_postgres::{Error};
 use axum::{Json};
 use axum::extract;
 
 pub async fn get() -> Json<Vec<Task>> {
-    let task = Task::new("Hello world".to_string(), "Goodbye world".to_string(), 1, 1, 1);
-    let task_two = Task::new("Hello night".to_string(), "no peace".to_string(), 2, 2, 2);
-    let res = vec![task, task_two];
-    let x = get_conn().await;
-    match x {
-        Ok(s) => {
-            println!("{}", "ok");
-        },
-        Err(err) => {
-            println!("{}", err);
-        }
+    let tasks = get_tasks().await;
+    match tasks {
+        Ok(res) => Json(res),
+        Err(_err) => Json(vec![])
     }
-    Json(res)
+    
 }
 
 pub async fn put(extract::Json(payload): extract::Json<Task>) {
     
 }
 
-pub async fn post(extract::Json(payload): extract::Json<Task>) {
-    
+pub async fn post(extract::Json(mut payload): extract::Json<Task>) -> Json<i32> {
+    println!("{}", payload.get_id());
+    let x = add_task(&payload).await;
+    match x {
+        Ok(z) => println!("ok"),
+        Err(err) => println!("{}", err)
+    }
+    Json(0)
 }

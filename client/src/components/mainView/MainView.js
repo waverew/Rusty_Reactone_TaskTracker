@@ -21,6 +21,9 @@ const MainView = (props) => {
 
   const addTask = (task) => {
     setData([...data, task]);
+    TaskService.addTask(task)
+    .then((res) => console.log(res))
+    .catch((err) => console.log(err));
   };
 
   const deleteTask = (deletedChip) => {

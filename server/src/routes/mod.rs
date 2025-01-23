@@ -1,6 +1,7 @@
 mod handlers;
 use axum::{
     headers::Authorization,
+    http::header::CONTENT_TYPE,
     http::Method,
     routing::{get, post},
     Extension, Router, TypedHeader,
@@ -16,13 +17,14 @@ pub struct SharedData {
 
 pub fn create_route() -> Router {
     let cros = CorsLayer::new()
-        .allow_methods([Method::GET, Method::POST])
+        .allow_methods([Method::GET, Method::POST, Method::OPTIONS])
+        .allow_headers([CONTENT_TYPE])
         .allow_origin(Any);
     let shared_data = SharedData {
         message: "Hello from Shared Data".to_owned(),
     };
     Router::new()
-        .route("/api/tasks", get(t_get).put(t_get).post(t_post))
+        .route("/api/tasks", get(t_get).post(t_post))
         .layer(cros)
         .layer(Extension(shared_data))
 }

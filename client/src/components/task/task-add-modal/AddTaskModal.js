@@ -3,8 +3,11 @@ import { useRef, useEffect, useState, forwardRef, useImperativeHandle } from "re
 
 const AddTaskModal = forwardRef((props, ref) => {
   const dialogRef = useRef(null);
+  const titleRef = useRef(null);
+  const contentRef = useRef(null);
   const checkBoxes = useRef([null, null, null]);
   const [titleInpVal, setTitleInpVal] = useState("");
+  const [invalid, setInvalid] = useState(false);
   const [contentInpVal, setContentInpVal] = useState("");
   const importanceTypes = ["низкая", "средняя", "высокая"];
 
@@ -37,6 +40,9 @@ const AddTaskModal = forwardRef((props, ref) => {
   };
 
   const saveTask = () => {
+    if (validateInputs()) {
+      return;
+    }
     let importance = getImportanceVal();
     const data = {
       title: titleInpVal,
@@ -45,8 +51,30 @@ const AddTaskModal = forwardRef((props, ref) => {
       status: 0,
     };
     props.addTask(data);
+    
     toggleDialog();
   };
+
+  const validateInputs = () => {
+    if (!titleInpVal) {
+      titleRef.current.classList.add('invalid');
+      setInvalid(true);
+    } else {
+      titleRef.current.classList.remove('invalid');
+    }
+    if (!contentInpVal) {
+      contentRef.current.classList.add('invalid');
+      setInvalid(true);
+    } else {
+      contentRef.current.classList.remove('invalid');
+    }
+    if (titleInpVal && contentInpVal) {
+      setInvalid(false);
+      return false;
+    } else {
+      return true;
+    }
+  }
 
   const getImportanceVal = () => {
     for (var i = 0; i < checkBoxes.current.length; i++) {
@@ -88,7 +116,8 @@ const AddTaskModal = forwardRef((props, ref) => {
         <div className="inp-wrap align-center">
           <div className="field-tag">Название:</div>
           <input
-          className="name-input"
+            ref={titleRef}
+            className="name-input"
             type="text"
             value={titleInpVal}
             onChange={(e) => handleChange(e, "title")}
@@ -98,6 +127,7 @@ const AddTaskModal = forwardRef((props, ref) => {
           <div className="inp-wrap ">
             <div className="field-tag">Содержание:</div>
             <textarea rows={4}
+              ref={contentRef}
               cols={30}
               value={contentInpVal}
               onChange={(e) => handleChange(e, "content")}
@@ -122,7 +152,7 @@ const AddTaskModal = forwardRef((props, ref) => {
           ))}
         </div>
       </div>
-
+      {invalid && <div className="warning">Не заполнены обязательные поля</div>}
       <button onClick={saveTask} className="button-standard">Сохранить</button>
     </dialog>
   );
