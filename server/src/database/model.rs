@@ -20,12 +20,17 @@ pub async fn add_task(task: &Task) -> Result<(), Error> {
     Ok(())
 }
 
-pub async fn edit_task(task: &Task, ) -> Result<(), Error> {
-    let client = get_client().await;((
+pub async fn edit_task(task: &Task) -> Result<(), Error> {
+    let client = get_client().await;
     let query_string = format!("UPDATE tasks SET title='{0}', content='{1}', importance='{2}', status='{3}' WHERE id='{4}';",
     task.get_title(), task.get_content(), task.get_importance(), task.get_status(), task.get_id());
     client.query(&query_string, &[]).await?;
     Ok(())
+}
+
+pub async fn delete_task(task: &Task) -> Result<(), Error> {
+    let client = get_client().await;
+    
 }
 
 async fn connect_raw(s: &str) -> Result<(Client, Connection<TcpStream, NoTlsStream>), Error> {
