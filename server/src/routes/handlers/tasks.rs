@@ -14,11 +14,10 @@ pub async fn get() -> Json<Vec<Task>> {
 }
 
 pub async fn put(extract::Json(payload): extract::Json<Task>) {
-    
+    let x = add_task(&payload).await;
 }
 
 pub async fn post(extract::Json(mut payload): extract::Json<Task>) -> Json<i32> {
-    println!("{}", payload.get_id());
     let x = add_task(&payload).await;
     match x {
         Ok(z) => println!("ok"),
