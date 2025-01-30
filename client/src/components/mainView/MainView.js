@@ -27,11 +27,15 @@ const MainView = (props) => {
   };
 
   const deleteTask = (deletedChip) => {
+    console.log(deletedChip);
     const index = getIndex(deletedChip);
     if (index !== -1) {
       data.splice(index, 1);
       setData([...data]);
     }
+    TaskService.deleteTask(deletedChip)
+    .then((res) => console.log(res))
+    .catch((err) => console.log(err));
   };
 
   const editTask = (editedTask) => {

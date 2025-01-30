@@ -30,6 +30,9 @@ pub async fn edit_task(task: &Task) -> Result<(), Error> {
 
 pub async fn delete_task(task: &Task) -> Result<(), Error> {
     let client = get_client().await;
+    let query_string = format!("DELETE FROM ONLY tasks WHERE id='{}'", task.get_id());
+    client.query(&query_string, &[]).await?;
+    Ok(())
     
 }
 

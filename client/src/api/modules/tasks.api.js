@@ -6,3 +6,9 @@ export const getTasks = () => {
 export const postTask = (task) => {
     return axiosClient.post("/api/tasks", task);
 }
+export const putTask = (task) => {
+    return axiosClient.put("/api/tasks", task);
+}
+export const deleteTask = (task) => {
+    return axiosClient.delete("/api/tasks", {data: task});
+}
