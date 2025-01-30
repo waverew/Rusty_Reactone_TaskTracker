@@ -42,7 +42,6 @@ const MainView = (props) => {
     setChipToEdit(editedTask);
     editTaskModalRef.current.toggle();
     editTaskModalRef.current.setDataForEdit(editedTask);
-    console.log(editedTask);
   }
 
   const handleDialogState = (type) => {
@@ -72,6 +71,9 @@ const MainView = (props) => {
       data[index] = chip;
       setData([...data]);
     }
+    TaskService.editTask(chip)
+    .then((res) => console.log(res))
+    .catch((err) => console.log(err));
   } 
 
   const getIndex = (chip) => {

@@ -43,6 +43,7 @@ const EditTaskModal = forwardRef((props, ref) => {
     let importance = getImportanceVal();
     
     const data = {
+      id: props.chip.id,
       title: titleInpVal,
       content: contentInpVal,
       importance: importance,
