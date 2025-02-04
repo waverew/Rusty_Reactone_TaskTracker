@@ -33,9 +33,7 @@ const MainView = (props) => {
       data.splice(index, 1);
       setData([...data]);
     }
-    TaskService.deleteTask(deletedChip)
-    .then((res) => console.log(res))
-    .catch((err) => console.log(err));
+    TaskService.deleteTask(deletedChip);
   };
 
   const editTask = (editedTask) => {
@@ -62,6 +60,7 @@ const MainView = (props) => {
       const newChip = data[index];
       data.splice(index, 1);
       setData([...data, newChip]);
+      TaskService.editTask(newChip);
     }
   };
 
@@ -71,9 +70,7 @@ const MainView = (props) => {
       data[index] = chip;
       setData([...data]);
     }
-    TaskService.editTask(chip)
-    .then((res) => console.log(res))
-    .catch((err) => console.log(err));
+    TaskService.editTask(chip);
   } 
 
   const getIndex = (chip) => {
